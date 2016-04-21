@@ -122,7 +122,8 @@ VALADOC_REQUIRED=0.3.1
 # Check deps
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED)
 PKG_CHECK_MODULES(GOBJECT, gobject-2.0 >= $GLIB_REQUIRED)
-PKG_CHECK_MODULES(GTK, gtk+-3.0 > 3.14.12)
+#PKG_CHECK_MODULES(GTK, gtk+-3.0 > 3.14.12)
+PKG_CHECK_MODULES(GXML, gxml-0.10 >= 0.10.0)
 
 # Check for vala
 VALAC_CHECK
@@ -173,20 +174,10 @@ AM_CONDITIONAL(PLATFORM_WIN32, [test x$platform_win32 = xyes])
 ### Autoconf generating Makefiles
 AC_CONFIG_FILES([
 Makefile
-libgflow/Makefile
-libgflow/gflow-0.2.pc
-libgflow/namespace-info.vala
-libgtkflow/Makefile
-libgtkflow/gtkflow-0.2.pc
-libgtkflow/namespace-info.vala
-docs/Makefile
-docs/valadoc/Makefile
-docs/valadoc/gtk-doc/Makefile
-docs/valadoc/devhelp/Makefile
-po/Makefile.in
-test/Makefile
-test/tests-config.vala
-examples/Makefile
+libplogic/Makefile
+libplogic/plogic-0.2.pc
+libplogic/namespace-info.vala
+vapi/Makefile
 ])
 AC_OUTPUT
 
