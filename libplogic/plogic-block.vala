@@ -21,11 +21,13 @@
 
 using Gee;
 
-public interface Plog.Operator : Object, Plog.LogicObject {
-  public abstract Map<string,Input> inputs { get; }
-  public abstract bool evaluated { get; }
-  public abstract void reset ();
-  public abstract void evaluate ();
-  public virtual bool has_value_name (string name);
-  public virtual void set_value_state (string name, bool state);
+public errordomain Plog.BlockError {
+  INVALID_INPUT_NAME,
+  INVALID_OUTPUT_NAME,
+  INVALID_VALUE_NAME
+}
+
+public interface Plog.Block : Object, LogicObject, Operator {
+  public abstract Map<string,Output> outputs { get; }
+  public abstract void add_operator (Operator op) throws GLib.Error;
 }

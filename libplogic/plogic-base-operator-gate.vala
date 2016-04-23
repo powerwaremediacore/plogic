@@ -18,14 +18,31 @@
  * Authors:
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-
 using Gee;
 
-public interface Plog.Operator : Object, Plog.LogicObject {
-  public abstract Map<string,Input> inputs { get; }
-  public abstract bool evaluated { get; }
-  public abstract void reset ();
+public class Plog.BaseOperatorGate : Object, LogicObject, Operator, OperatorGate {
+  protected Gee.HashMap<string,Input> _inputs = new Gee.HashMap<string,Input> ();
+  protected bool _evaluated = false;
+  protected Plog.Value _output = new Plog.Value ();
+
+  public string name { get; set; default = "or";  }
+  public bool enable { get; set; }
+  public bool hold { get; set; }
+  public Map<string,Input> inputs { get { return _inputs; } }
+  public Value output { get { return _output; } }
+  public bool evaluated { get { return _evaluated; } }
+  public void reset () { _valuated = false; }
   public abstract void evaluate ();
-  public virtual bool has_value_name (string name);
-  public virtual void set_value_state (string name, bool state);
+  public virtual bool has_value_name (string name) {
+    if (_output.name == name) return true;
+    foreach (Input i in inputs) {
+      if (i.name == name) return true;
+    }
+    return false;
+  }
+  public virtual void set_value_state (string name, bool state) {
+    var i = inputs.get (name);
+    if (i == null) return;
+    i.state = state;
+  }
 }

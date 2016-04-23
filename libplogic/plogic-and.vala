@@ -18,14 +18,20 @@
  * Authors:
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-
 using Gee;
 
-public interface Plog.Operator : Object, Plog.LogicObject {
-  public abstract Map<string,Input> inputs { get; }
-  public abstract bool evaluated { get; }
-  public abstract void reset ();
-  public abstract void evaluate ();
-  public virtual bool has_value_name (string name);
-  public virtual void set_value_state (string name, bool state);
+public class Plog.And : Plog.BaseOperator {
+  public override void evaluate () {
+    _evaluated = false;
+    if (!enable) return;
+    bool s = true;
+    foreach (Input input in inputs.values) {
+      if (!input.enable) continue;
+      s = s && input.state;
+      if (!s) break;
+    }
+    _output.state = s;
+    if (!hold)
+      _evaluated = true;
+  }
 }

@@ -12,7 +12,18 @@ lib_LTLIBRARIES = libplogic-0.2.la
 # Vala source code
 sources = \
 	namespace-info.vala \
-	plogic-operator.vala
+	plogic-and.vala \
+	plogic-base-operator-gate.vala \
+	plogic-block.vala \
+	plogic-block-definition.vala \
+	plogic-object.vala \
+	plogic-or.vala \
+	plogic-input.vala \
+	plogic-operator.vala \
+	plogic-operator-gate.vala \
+	plogic-output.vala \
+	plogic-result.vala \
+	plogic-value.vala
 
 
 ### General Compilation flags

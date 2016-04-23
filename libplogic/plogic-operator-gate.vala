@@ -21,11 +21,6 @@
 
 using Gee;
 
-public interface Plog.Operator : Object, Plog.LogicObject {
-  public abstract Map<string,Input> inputs { get; }
-  public abstract bool evaluated { get; }
-  public abstract void reset ();
-  public abstract void evaluate ();
-  public virtual bool has_value_name (string name);
-  public virtual void set_value_state (string name, bool state);
+public interface Plog.OperatorGate : Object, Plog.LogicObject, Operator {
+  public abstract Value output { owned get; }
 }
