@@ -125,14 +125,19 @@ public interface Plog.BlockDefinition : Object, LogicObject, Block {
       op.set_value_state (name);
     }
   }
-  public void evaluate () {
+  public void evaluate (GLib.Cancellable cancellable = null) {
     var eops = new HashSet<string> ();
     foreach (Operator op in _operators.values) {
+      if (cancellable.
+      if (!op.enable) continue;
+      if (op.evaluated) continue;
       op.hold = false;
       foreach (Input iop in op.inputs.values) {
+        if (!iop.enable) continue;
         if (is_connected (iop.name)) {
           iop.enable = true;
           var o = get_object_from_value_name (iop.name);
+          if (!o.enable) continue;
           if (!(o is Plog.Value)) {
             if (o.enable && o.hold) {
               iop.hold = true;
@@ -140,13 +145,16 @@ public interface Plog.BlockDefinition : Object, LogicObject, Block {
               continue;
             }
           }
-          if (!o.enable) continue;
-          i
+          iop.status = (o as Plog.Value).status;
         }
         else
           iop.enable = false;
-        if (op.hold) eops.add (op);
       }
+      if (op.hold)
+        eops.add (op);
+      else
+        op.evaluate ();
     }
+    if (eops.size != 0) evaluate ();
   }
 }

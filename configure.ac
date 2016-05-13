@@ -107,7 +107,7 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
                    [The domain to use with gettext])
 AM_GLIB_GNU_GETTEXT
 
-GXML_LOCALEDIR=[${datadir}/locale]
+PLOGIC_LOCALEDIR=[${datadir}/locale]
 AC_SUBST(GXML_LOCALEDIR)
 
 ### Dependencies
@@ -185,7 +185,7 @@ AC_OUTPUT
 
 # Print configuration summary
 echo ""
-echo " Configuration summary for libgtkflow-$VERSION"
+echo " Configuration summary for libplogic-$VERSION"
 echo "   Installation prefix:     $prefix"
 echo "   GObject Introspection:   $found_introspection"
 echo "   Debug:                   $debug"

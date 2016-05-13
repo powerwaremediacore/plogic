@@ -46,12 +46,12 @@ AM_CFLAGS = \
 	$(NULL)
 
 
-if ENABLE_DEVHELP_DOCS
+#if ENABLE_DEVHELP_DOCS
 
-AM_VALAFLAGS += \
-       --vapi-comments
+#AM_VALAFLAGS += \
+#       --vapi-comments
 
-endif
+#endif
 
 # -Wall   # TODO: add this back when we can properly handle more libxml2/vala warnings
 
