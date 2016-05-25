@@ -19,7 +19,7 @@
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public class Plg.Result : Object, Value, Input, Output {
+public class Plg.Result : Object, Plg.Value, Input, Output {
   public string name { get; set; }
   public bool state { get; set; default = true; }
   public bool enable { get; set; }

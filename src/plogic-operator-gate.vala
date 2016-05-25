@@ -21,6 +21,6 @@
 
 using Gee;
 
-public interface Plg.OperatorGate : Object, Plog.LogicObject, Operator {
-  public abstract Value output { owned get; }
+public interface Plg.OperatorGate : Object, Plg.LogicObject, Plg.Operator {
+  public abstract Plg.Value output { owned get; }
 }

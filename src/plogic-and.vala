@@ -20,7 +20,7 @@
  */
 using Gee;
 
-public class Plg.And : Plog.BaseOperator {
+public class Plg.And : Plg.BaseOperatorGate {
   public override void evaluate () {
     _evaluated = false;
     if (!enable) return;

@@ -19,4 +19,4 @@
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Input : Object, LogicObject, Value {}
+public interface Plg.Input : Object, Plg.LogicObject, Plg.Value {}

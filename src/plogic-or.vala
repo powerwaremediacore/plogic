@@ -20,12 +20,12 @@
  */
 using Gee;
 
-public class Plg.Or : Plog.BaseOperator {
+public class Plg.Or : Plg.BaseOperatorGate {
   public override void evaluate () {
     _evaluated = false;
     if (!enable) return;
     _output.state = false;
-    foreach (Input input in inputs.values) {
+    foreach (Value input in inputs.values) {
       if (!input.enable) continue;
       _output.state = _output.state || input.state;
     }

@@ -28,6 +28,5 @@ public errordomain Plg.BlockError {
 }
 
 public interface Plog.Block : Object, LogicObject, Operator {
-  public abstract Map<string,Output> outputs { get; }
-  public abstract void add_operator (Operator op) throws GLib.Error;
+  public abstract Value.Map outputs { get; }
 }

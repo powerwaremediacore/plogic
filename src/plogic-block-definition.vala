@@ -21,140 +21,16 @@
 
 using Gee;
 
-public interface Plg.BlockDefinition : Object, LogicObject, Block {
-  protected Gee.HashMap<string,Input> _inputs = new Gee.HashMap<string,Input> ();
-  protected Gee.HashMap<string,Output> _outputs = new Gee.HashMap<string,Output> ();
-  protected Gee.HashMap<string,Value> _values = new Gee.HashMap<string,Value> ();
-  protected Gee.HashMap<string,Gee.HashSet<string>> _connections = new Gee.HashMap<string,Gee.HashSet<string>> ();
-  protected Gee.HashMap<string,Operator> _operators = new Gee.HashMap<string,Operator> ();
+public class Plg.BlockDefinition : OperatorBase, Block {
+  protected Value.Map _outputs = new Value.Map ();
+  protected Value.Map _values = new Value.Map ();
+  protected Operator.Map _operators = new Operator.Map ();
 
-  public string name { get; set; }
-  public bool enable { get; set; }
-  public bool hold { get; set; }
-  public Collection<Input> inputs { get { return _inputs; } }
-  public Collection<Output> outputs { get { return _outputs; } }
-  public bool evaluated { get; }
-
-  public bool has_value_name (string name) {
-    if (_outputs.has_key (input.name)
-          || _inputs.has_key (input.name)
-          || _values.has_key (input.name))
-      return true;
-    else {
-      foreach (Operator op in _operators) {
-        if (op.has_value_name (name)) return true;
-      }
+  public Value.Map outputs { get { return _outputs; } }
+  public override void evaluate (GLib.Cancellable cancellable = null) {
+    _valuated = true;
+    foreach (Operator op in operators) {
+      op.evaluate ();
     }
-    return false;
-  }
-
-  public void add_input (Input input) throws GLib.Error {
-    if (!has_value_name (input.name))
-      throw new BlockError.INVALID_INPUT_NAME ("invalid input name");
-    _inputs.set (input.name, input);
-  }
-
-  public void add_output (Output output) throws GLib.Error {
-    if (!has_value_name (input.name))
-      throw new BlockError.INVALID_OUTPUT_NAME ("invalid output name");
-    _outputs.set (output.name, input);
-  }
-
-  public void add_internal_value (Plog.Value val) throws GLib.Error {
-    if (!has_value_name (input.name))
-      throw new BlockError.INVALID_VALUE_NAME ("invalid value name");
-    _values.set (val.name, val);
-  }
-
-  public void connect (string valsrc, string valdst) throws GLib.Error {
-    if (valsrc == valdst) return;
-    if (has_value_name (valsrc))
-      throw new BlockError.INVALID_VALUE_NAME ("Source value name is invalid");
-    if (has_value_name (valdst))
-      throw new BlockError.INVALID_VALUE_NAME ("Destiny value name is invalid");
-
-    if (_connections.has_key (valsrc)) {
-      _connection.get (valsrc).add (valdst);
-    else
-      _connections.set (valdst, (new Gee.HashSet()).add (valdst));
-  }
-
-  public void add_operator (Operator op) throws GLib.Error {
-    int i = 0;
-    string name = op.name;
-    while (_operators.has_key (name))
-      name = op.name + i.to_string ();
-    op.name = name;
-    _operators.set (op.name, op);
-  }
-  public bool are_connected (string src, string dst) {
-    if (!_connections.has_key (src)) return false;
-    if (!_connections.get (src).contains (dst)) return false;
-    return true;
-  }
-  public bool is_connected (string name) {
-    if (_connections.has_key (name)) return true;
-    foreach (HashSet s in _connections.values) {
-      if (s.has_key (name)) return true;
-    }
-    return false;
-  }
-  public LogicObject get_object_from_value_name (string name) {
-    if (_inputs.has_key (name)) return _inputs.get (name);
-    if (_outputs.has_key (name)) return _outputs.get (name);
-    foreach (Operator op in _operators.values) {
-      if (op.has_value_name (name)) return op;
-    }
-  }
-  public void set_value_state (string name, bool state) {
-    _evaluated = false;
-    if (!enable) return;
-    if (_inputs.has_key (name)) {
-      _inputs.get (name).state = state;
-      return;
-    }
-    if (_outputs.has_key (name)) {
-      _outputs.get (name).state = state;
-      return;
-    }
-    if (_values.has_key (name)) {
-      _inputs.get (name).state = state;
-      return;
-    }
-    foreach (Operator op in _operators) {
-      op.set_value_state (name);
-    }
-  }
-  public void evaluate (GLib.Cancellable cancellable = null) {
-    var eops = new HashSet<string> ();
-    foreach (Operator op in _operators.values) {
-      if (cancellable.
-      if (!op.enable) continue;
-      if (op.evaluated) continue;
-      op.hold = false;
-      foreach (Input iop in op.inputs.values) {
-        if (!iop.enable) continue;
-        if (is_connected (iop.name)) {
-          iop.enable = true;
-          var o = get_object_from_value_name (iop.name);
-          if (!o.enable) continue;
-          if (!(o is Plog.Value)) {
-            if (o.enable && o.hold) {
-              iop.hold = true;
-              op.hold = true;
-              continue;
-            }
-          }
-          iop.status = (o as Plog.Value).status;
-        }
-        else
-          iop.enable = false;
-      }
-      if (op.hold)
-        eops.add (op);
-      else
-        op.evaluate ();
-    }
-    if (eops.size != 0) evaluate ();
   }
 }
