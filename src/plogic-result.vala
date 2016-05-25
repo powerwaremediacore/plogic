@@ -19,9 +19,20 @@
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public class Plg.Result : Object, Plg.Value, Input, Output {
+public class Plg.ValueHolder : Object, Plg.LogicObject, Plg.Value {
+  protected Plg.Operator _operator = null;
   public string name { get; set; }
-  public bool state { get; set; default = true; }
   public bool enable { get; set; }
   public bool hold { get; set; }
+  public bool state { get; set; default = true; }
+  public Operator get_operator () { return _operator; }
+  public ValueHolder.with_operator (Plg.Operator op) { _operator = op; }
+}
+
+public class Plg.InputValue : Plg.ValueHolder, Input {
+  public InputValue.with_operator (Plg.Operator op) { _operator = op; }
+}
+
+public class Plg.OutputValue : Plg.ValueHolder, Output {
+  public OutputValue.with_operator (Plg.Operator op) { _operator = op; }
 }

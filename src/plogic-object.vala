@@ -20,7 +20,7 @@
  */
 
 public interface Plg.LogicObject : Object {
-  public abstract string name { get; }
+  public abstract string name { get; set; }
   public abstract bool enable { get; set; }
   public abstract bool hold { get; set; }
 }

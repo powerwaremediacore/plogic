@@ -22,5 +22,5 @@
 using Gee;
 
 public interface Plg.OperatorGate : Object, Plg.LogicObject, Plg.Operator {
-  public abstract Plg.Value output { owned get; }
+  public abstract Plg.Output get_output ();
 }

@@ -19,14 +19,12 @@
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-using Gee;
-
 public interface Plg.Operator : Object, Plg.LogicObject {
-  public abstract Map inputs { get; }
-  public abstract bool evaluated { get; }
+  public abstract Input.Map get_inputs ();
+  public abstract bool get_evaluated ();
   public abstract void reset ();
-  public abstract void evaluate ();
+  public abstract void evaluate (GLib.Cancellable? cancellable);
   public class Map : Gee.HashMap<string,Operator> {
-    public Operator get (string name) { return base.get (name); }
+    public new Operator get (string name) { return base.get (name); }
   }
 }

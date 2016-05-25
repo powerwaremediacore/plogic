@@ -21,9 +21,8 @@
 
 public interface Plg.Value : Object, LogicObject {
   public abstract bool state { get; set; }
-  public abstract bool invalid { get; set; }
-  public abstract Operator operator { get; }
+  public abstract Operator get_operator ();
   public class Map : Gee.HashMap<string,Plg.Value> {
-    public Plg.Value get (string name) { return base.get (name); }
+    public new Plg.Value get (string name) { return base.get (name); }
   }
 }

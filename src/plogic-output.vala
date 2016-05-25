@@ -19,4 +19,8 @@
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Output : Object, LogicObject, Plg.Value {}
+public interface Plg.Output : Object, LogicObject, Plg.Value {
+  public class Map : Gee.HashMap<string,Output> {
+    public new Output get (string name) { return base.get (name); }
+  }
+}

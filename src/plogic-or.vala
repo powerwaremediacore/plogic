@@ -21,11 +21,11 @@
 using Gee;
 
 public class Plg.Or : Plg.BaseOperatorGate {
-  public override void evaluate () {
+  public override void evaluate (GLib.Cancellable? cancellable) {
     _evaluated = false;
     if (!enable) return;
     _output.state = false;
-    foreach (Value input in inputs.values) {
+    foreach (Value input in get_inputs ().values) {
       if (!input.enable) continue;
       _output.state = _output.state || input.state;
     }

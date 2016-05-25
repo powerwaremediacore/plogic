@@ -2,7 +2,7 @@
 /*
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-public class Plg.BaseOperatorGate : Plg.BaseOperator, OperatorGate {
-  public Value output { get { return _output; } }
-  public virtual void evaluate () { return; }
+public abstract class Plg.BaseOperatorGate : Plg.BaseOperator, OperatorGate {
+  protected Plg.OutputValue _output = new Plg.OutputValue ();
+  public Plg.Output get_output () { return _output; }
 }

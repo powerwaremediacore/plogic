@@ -21,16 +21,19 @@
 
 using Gee;
 
-public class Plg.BlockDefinition : OperatorBase, Block {
-  protected Value.Map _outputs = new Value.Map ();
-  protected Value.Map _values = new Value.Map ();
+public class Plg.BlockDefinition : BaseOperator, Plg.Block {
+  protected Output.Map _outputs = new Output.Map ();
+  protected Plg.Value.Map _values = new Value.Map ();
   protected Operator.Map _operators = new Operator.Map ();
 
-  public Value.Map outputs { get { return _outputs; } }
-  public override void evaluate (GLib.Cancellable cancellable = null) {
-    _valuated = true;
-    foreach (Operator op in operators) {
-      op.evaluate ();
+  public Output.Map get_outputs () { return _outputs; }
+  public Plg.Operator.Map get_operators () { return _operators; }
+  public Plg.Value.Map get_values () { return _values; }
+
+  public override void evaluate (GLib.Cancellable? cancellable = null) {
+    _evaluated = true;
+    foreach (Operator op in get_operators ().values) {
+      op.evaluate (null);
     }
   }
 }

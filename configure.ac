@@ -92,7 +92,7 @@ AX_CHECK_COMPILE_FLAG([-std=gnu11],
 dnl ***********************************************************************
 dnl Check for required packages
 dnl ***********************************************************************
-PKG_CHECK_MODULES(PLOGIC, [glib-2.0 gobject-2.0])
+PKG_CHECK_MODULES(PLOGIC, [glib-2.0 gobject-2.0 gio-2.0 gee-0.8])
 
 
 dnl ***********************************************************************

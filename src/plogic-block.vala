@@ -27,6 +27,8 @@ public errordomain Plg.BlockError {
   INVALID_VALUE_NAME
 }
 
-public interface Plog.Block : Object, LogicObject, Operator {
-  public abstract Value.Map outputs { get; }
+public interface Plg.Block : Object, Plg.LogicObject, Plg.Operator {
+  public abstract Plg.Output.Map get_outputs ();
+  public abstract Plg.Value.Map get_values ();
+  public abstract Plg.Operator.Map get_operators ();
 }

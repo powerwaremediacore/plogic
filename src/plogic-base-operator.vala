@@ -3,15 +3,14 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 public abstract class Plg.BaseOperator : Object, LogicObject, Operator {
-  protected Operator.Map _inputs = new Operator.Map ();
+  protected Input.Map _inputs = new Input.Map ();
   protected bool _evaluated = false;
-  protected Plog.Value _output = new Plog.Value ();
 
   public string name { get; set; default = "or";  }
   public bool enable { get; set; }
   public bool hold { get; set; }
-  public Operator.Map inputs { get { return _inputs; } }
-  public bool evaluated { get { return _evaluated; } }
-  public void reset () { _valuated = false; }
-  public abstract void evaluate ();
+  public Input.Map get_inputs () { return _inputs; }
+  public bool get_evaluated () { return _evaluated; }
+  public void reset () { _evaluated = false; }
+  public abstract void evaluate (GLib.Cancellable? cancellable);
 }
