@@ -1,193 +1,131 @@
-#  this file with autoconf to produce a configure script.
-
-# Sections
-#   Version numbers
-#   Setup
-#   Dependencies
-#   Output
+AC_PREREQ([2.69])
 
 
-### Version numbers
+dnl ***********************************************************************
+dnl Define Versioning Information
+dnl ***********************************************************************
+m4_define([major_version],[1])
+m4_define([minor_version],[1])
+m4_define([micro_version],[0])
+m4_define([package_version],[major_version.minor_version.micro_version])
+m4_define([bug_report_url],[https://bugzilla.gnome.org/enter_bug.cgi?product=plogic])
+m4_define([api_version],[major_version])
 
-# Release Version
-m4_define([project_major_version], [0])
-m4_define([project_minor_version], [1])
-m4_define([project_micro_version], [0])
-m4_define([project_nano_version], [0])
+AX_IS_RELEASE([micro-version])
 
-# LT_VERSION
-#   If library source has changed since last release, increment revision
-#   If public symbols have been added, removed or changed since last release,
-#     increment current and set revision to 0
-#   If public symbols have been added since last release, increment age
-#   If public symbols have been removed since last release, set age to 0
-m4_define([project_lt_current], [1])
-m4_define([project_lt_revision], [0])
-m4_define([project_lt_age], [0])
-
-# Combine numbers to various version variables (different uses)
-#   Display the nano_version only if it's not '0'
-m4_define([project_base_version],
-          project_major_version.project_minor_version.project_micro_version)
-m4_define([project_full_version],
-          [m4_if(project_nano_version, [0],
-                 project_base_version, project_base_version.project_nano_version)])
-
-# You should set project_released to one in order to mark this as a released version
-# and to avoid date on version number
-m4_define(project_released, [0])
-m4_define([project_maybe_datestamp],
-          m4_if(project_released, [1],
-                [], [m4_esyscmd([date +.%Y%m%d | tr -d '\n\r'])]))
-
-m4_define([project_version], project_full_version[]project_maybe_datestamp)
-m4_define([project_major_minor_version], project_major_version.project_minor_version)
-m4_define([project_module_version], project_lt_current)
-
-
-
-### Setup
-
-# Initialise autoconf with project details, version
-AC_INIT([libplogic], project_version,
-        [], [libplogic],
-        [])
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-
-AC_PREREQ([2.65])
-AC_COPYRIGHT([Copyright (C) 2016 Daniel Espinosa <daniel.espinosa@pwmc.mx>])
-
-# Configure various files and settings for autoconf/automake
-AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_SRCDIR([Makefile.am])
+dnl ***********************************************************************
+dnl Initialize autoconf
+dnl ***********************************************************************
+AC_INIT([plogic],[package_version],[bug_report_url])
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([configure.ac])
-AM_INIT_AUTOMAKE([1.11 dist-xz no-define
-                  no-dist-gzip tar-ustar -Wno-portability])
+AC_CONFIG_SRCDIR([data/plogic.pc.in])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_SUBST([ACLOCAL_AMFLAGS], "-I m4")
+AC_CANONICAL_HOST
+
+
+dnl ***********************************************************************
+dnl Make version information available to autoconf files
+dnl ***********************************************************************
+AC_SUBST([MAJOR_VERSION],major_version)
+AC_SUBST([MINOR_VERSION],minor_version)
+AC_SUBST([MICRO_VERSION],micro_version)
+AC_SUBST([API_VERSION],api_version)
+
+
+dnl ***********************************************************************
+dnl Initialize automake
+dnl ***********************************************************************
+AM_SILENT_RULES([yes])
+AM_INIT_AUTOMAKE([1.11 foreign subdir-objects tar-ustar no-dist-gzip dist-xz -Wno-portability])
 AM_MAINTAINER_MODE([enable])
+AX_GENERATE_CHANGELOG
 
+
+dnl ***********************************************************************
+dnl Add extra debugging with --enable-debug and --enable-compile-warnings
+dnl ***********************************************************************
+AX_CHECK_ENABLE_DEBUG([no],[]
+                      [G_DISABLE_ASSERT G_DISABLE_CHECKS G_DISABLE_CAST_CHECKS])
+
+
+dnl ***********************************************************************
+dnl Internationalization
+dnl ***********************************************************************
+GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
+AC_SUBST([GETTEXT_PACKAGE])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [GETTEXT package name])
+
+AM_GNU_GETTEXT_VERSION([0.19.6])
+AM_GNU_GETTEXT([external])
+
+
+dnl ***********************************************************************
+dnl Check for required programs
+dnl ***********************************************************************
 AC_PROG_CC
-AM_PROG_CC_C_O
-
-# Initialise libtools (handles library creation) with stuff from above
-LT_INIT(win32-dll)
-
-PKG_PROG_PKG_CONFIG([0.21])
+AC_PROG_INSTALL
+AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
+AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
+AC_PATH_PROG([GLIB_COMPILE_RESOURCES],[glib-compile-resources])
+PKG_PROG_PKG_CONFIG([0.22])
 GLIB_GSETTINGS
+GOBJECT_INTROSPECTION_CHECK([1.42.0])
 
-AC_SUBST([CFLAGS])
-AC_SUBST([CPPFLAGS])
-AC_SUBST([LDFLAGS])
+AM_PROG_VALAC([0.32])
 
-LT_CURRENT=project_lt_current
-LT_REVISION=project_lt_revision
-LT_AGE=project_lt_age
-AC_SUBST([LT_CURRENT])
-AC_SUBST([LT_REVISION])
-AC_SUBST([LT_AGE])
-
-PROJECT_MAJOR_MINOR_VERSION=project_major_minor_version
-AC_SUBST([PROJECT_MAJOR_MINOR_VERSION])
-
-# This is used to identify a set of API compatible beatween versions 
-# - If new versions are compatible with the actual one, just leave this untouched
-# - If new version breaks API change it in order to allow paralled installations
-#   with old versions. Change name of pc files to use a new API too.
-API_VERSION=0.2
-AC_SUBST([API_VERSION])
-
-VERSION=project_base_version
-AC_SUBST([LIBGTKFLOW_VERSION])
-
-IT_PROG_INTLTOOL([0.35.0])
-
-GETTEXT_PACKAGE=libplogic
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
-                   [The domain to use with gettext])
-AM_GLIB_GNU_GETTEXT
-
-PLOGIC_LOCALEDIR=[${datadir}/locale]
-AC_SUBST(GXML_LOCALEDIR)
-
-### Dependencies
-
-# TODO: what do we do about libvala's versioning?  set it back to -0.18 and see what happens when we upgraded from Fedora 18 to 19
-
-GLIB_REQUIRED=2.32.0
-VALA_REQUIRED=0.28.0
-LIBVALA_REQUIRED=0.28
-VALADOC_REQUIRED=0.3.1
-
-# Check deps
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED)
-PKG_CHECK_MODULES(GOBJECT, gobject-2.0 >= $GLIB_REQUIRED)
-#PKG_CHECK_MODULES(GTK, gtk+-3.0 > 3.14.12)
-PKG_CHECK_MODULES(GXML, gxml-0.10 >= 0.10.0)
-
-# Check for vala
 VALAC_CHECK
 
-# Check for GObject Introspection
-GOBJECT_INTROSPECTION_CHECK([1.32.0])
 
-debug=no
-AC_ARG_ENABLE(debug,
-	AS_HELP_STRING([--enable-debug], [Enable Debug options [default=no]]),
-        [debug=$enableval], [debug="no"])
+AX_COMPILER_FLAGS
 
-AM_CONDITIONAL(DEBUG, [test $debug = yes])
 
-dnl Check Cross Compile
-dnl ******************************
-dnl Check for Operating System
-dnl ******************************
-dnl linklibext is the shared link library extension, which varies by platform
+dnl ***********************************************************************
+dnl Ensure C11 is Supported
+dnl ***********************************************************************
+AX_CHECK_COMPILE_FLAG([-std=gnu11],
+                      [CFLAGS="$CFLAGS -std=gnu11"],
+                      [AC_MSG_ERROR([C compiler cannot compile GNU C11 code])])
 
-#EXPORT_SYM_REGEX='-export-symbols-regex "^(gxml_|fnYM49765777344607__gxml).*"'
-#AC_MSG_CHECKING([for platform])
-#platform_win32=no
-#linklibext=".so"
-case "$host" in
-*-mingw*)
-#    AC_MSG_RESULT([Win32 - MinGW])
-    platform_win32=yes
-#    AC_DEFINE([USING_MINGW],[],[Using MinGW])
-#    NO_UNDEFINED='-no-undefined'
-#    LIBTOOL_EXPORT_OPTIONS=
-#    linklibext=".dll"
-#    AC_CHECK_TOOL(WINDRES, windres, windres)
-#    AC_SUBST(WINDRES)
-#    AC_CHECK_TOOL(DLLTOOL, dlltool, dlltool)
-#    AC_SUBST(DLLTOOL)
-    ;;
-*)
-#    AC_MSG_RESULT([Unix])
-#    NO_UNDEFINED=''
-#    LIBTOOL_EXPORT_OPTIONS=$EXPORT_SYM_REGEX
-#    ;;
-esac
-AM_CONDITIONAL(PLATFORM_WIN32, [test x$platform_win32 = xyes])
-#AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
-#AC_SUBST(NO_UNDEFINED)
 
-### Autoconf generating Makefiles
+dnl ***********************************************************************
+dnl Check for required packages
+dnl ***********************************************************************
+PKG_CHECK_MODULES(PLOGIC, [glib-2.0 gobject-2.0])
+
+
+dnl ***********************************************************************
+dnl Initialize Libtool
+dnl ***********************************************************************
+LT_PREREQ([2.2])
+LT_INIT
+
+
+dnl ***********************************************************************
+dnl Process .in Files
+dnl ***********************************************************************
 AC_CONFIG_FILES([
-Makefile
-libplogic/Makefile
-libplogic/plogic-0.2.pc
-libplogic/namespace-info.vala
-vapi/Makefile
-])
+	Makefile
+
+	src/Makefile
+	src/namespace-info.vala
+	src/plogic-$API_VERSION.deps:src/plogic.deps.in
+
+
+	data/Makefile
+	data/plogic-$API_VERSION.pc:data/plogic.pc.in
+
+	po/Makefile.in
+],[],
+[API_VERSION='$API_VERSION'])
 AC_OUTPUT
 
-
-
-# Print configuration summary
 echo ""
-echo " Configuration summary for libplogic-$VERSION"
-echo "   Installation prefix:     $prefix"
-echo "   GObject Introspection:   $found_introspection"
-echo "   Debug:                   $debug"
-echo "   Platform:                $host"
+echo " ${PACKAGE} - ${VERSION}"
+echo ""
+echo " Options"
+echo ""
+echo "  Prefix ............................... : ${prefix}"
+echo "  Libdir ............................... : ${libdir}"
 echo ""
