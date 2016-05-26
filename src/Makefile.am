@@ -9,8 +9,9 @@ libplogic_@API_VERSION@_la_SOURCES = \
 	plogic-operator.vala \
 	plogic-output.vala \
 	plogic-value.vala \
-	plogic-and.vala \
-	plogic-or.vala \
+	plogic-variable.vala \
+	plogic-gand.vala \
+	plogic-gor.vala \
 	plogic-gbase-operator.vala \
 	plogic-gbase-operator-gate.vala \
 	plogic-gblock.vala \
@@ -27,7 +28,6 @@ libplogic_@API_VERSION@_la_LIBADD = \
 	$(NULL)
 
 libplogic_@API_VERSION@_la_LDFLAGS = \
-	$(WARN_LDFLAGS) \
 	$(NULL)
 
 libplogic_@API_VERSION@_la_VALAFLAGS = \

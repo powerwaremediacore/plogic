@@ -5,7 +5,6 @@
 
 public interface Plg.Value : Object, LogicObject {
   public abstract bool state { get; set; }
-  public abstract Connection? connection { get; set; }
   public abstract void set_operator (Plg.Operator op);
   public abstract Plg.Operator get_operator ();
   public class Map : Gee.HashMap<string,Plg.Value> {

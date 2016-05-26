@@ -6,7 +6,7 @@
 public interface Plg.Connection : Object {
   public abstract string operator { get; set; }
   public abstract string value { get; set; }
-  public class Set : HashSet<Connection> {
-    public new Connection[] to_array () { return base.to_array (); }
+  public class Set : Gee.HashSet<Connection> {
+    //public new Connection[] to_array () { return base.to_array (); }
   }
 }

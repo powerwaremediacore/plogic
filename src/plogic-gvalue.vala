@@ -5,9 +5,8 @@
 
 public class Plg.GValue : Object, Plg.LogicObject, Plg.Value {
   protected Plg.Operator _operator = null;
-  protected bool _enable = false;
 
-  public string name { get; set; default = "Value1" }
+  public string name { get; set; default = "Value1"; }
   public bool state { get; set; default = true; }
   public bool enable { get; set; default = true; }
 

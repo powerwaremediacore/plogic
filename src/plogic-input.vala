@@ -4,7 +4,7 @@
  */
 
 public interface Plg.Input : Object, Plg.LogicObject, Plg.Value {
-  public abstract Plg.Connection connection { get; set; }
+  public abstract Plg.Connection? connection { get; set; }
   public class Map : Gee.HashMap<string,Input> {
     public new Input get (string name) { return base.get (name); }
   }
