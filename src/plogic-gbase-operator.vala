@@ -2,13 +2,12 @@
 /*
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-public abstract class Plg.BaseOperator : Object, LogicObject, Operator {
+public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
   protected Input.Map _inputs = new Input.Map ();
   protected bool _evaluated = false;
 
   public string name { get; set; default = "or";  }
   public bool enable { get; set; }
-  public bool hold { get; set; }
   public Input.Map get_inputs () { return _inputs; }
   public bool get_evaluated () { return _evaluated; }
   public void reset () { _evaluated = false; }

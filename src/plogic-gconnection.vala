@@ -3,8 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-using Gee;
-
-public interface Plg.OperatorGate : Object, Plg.LogicObject, Plg.Operator {
-  public abstract Plg.Output get_output ();
+public interface Plg.GConnection : Object, Plg.Connection {
+  public string operator { get; set; }
+  public string value { get; set; }
 }

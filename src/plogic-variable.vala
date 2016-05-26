@@ -3,9 +3,9 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Output : Object, LogicObject, Plg.Value {
+public interface Plg.Variable : Object, LogicObject, Plg.Value {
   public abstract Plg.Connection.Set connections { get; set; }
-  public class Map : Gee.HashMap<string,Output> {
-    public new Output get (string name) { return base.get (name); }
+  public class Map : Gee.HashMap<string,Variable> {
+    public new Variable get (string name) { return base.get (name); }
   }
 }

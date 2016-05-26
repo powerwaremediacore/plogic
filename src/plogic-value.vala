@@ -1,27 +1,13 @@
 /* -*- Mode: vala; indent-tabs-mode: nil; c-basic-offset: 0; tab-width: 2 -*- */
 /*
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
-
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
- *
- * Authors:
- *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
 public interface Plg.Value : Object, LogicObject {
   public abstract bool state { get; set; }
-  public abstract Operator get_operator ();
+  public abstract Connection? connection { get; set; }
+  public abstract void set_operator (Plg.Operator op);
+  public abstract Plg.Operator get_operator ();
   public class Map : Gee.HashMap<string,Plg.Value> {
     public new Plg.Value get (string name) { return base.get (name); }
   }
