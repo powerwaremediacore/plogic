@@ -57,7 +57,7 @@ GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [GETTEXT package name])
 
-AM_GNU_GETTEXT_VERSION([0.19.6])
+AM_GNU_GETTEXT_VERSION([0.19.3])
 AM_GNU_GETTEXT([external])
 
 
@@ -115,6 +115,9 @@ AC_CONFIG_FILES([
 
 	data/Makefile
 	data/plogic-$API_VERSION.pc:data/plogic.pc.in
+
+	test/Makefile
+	test/test-config.vala
 
 	po/Makefile.in
 ],[],
