@@ -4,6 +4,7 @@ noinst_PROGRAMS = plogic_test
 
 plogic_test_CFLAGS = \
 	$(PLOGIC_CFLAGS) \
+	-I$(top_builddir)/src \
 	$(NULL)
 
 
@@ -16,7 +17,7 @@ plogic_test_LDFLAGS = \
 plogic_test_SOURCES = \
 	test-config.vala \
 	test.vala \
-	case.vala \
+	case-and.vala \
 	$(NULL)
 
 plogic_test_VALAFLAGS = \

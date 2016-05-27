@@ -110,7 +110,7 @@ AC_CONFIG_FILES([
 
 	src/Makefile
 	src/namespace-info.vala
-	src/plogic-$API_VERSION.deps:src/plogic.deps.in
+	src/plg-$API_VERSION.deps:src/plogic.deps.in
 
 
 	data/Makefile

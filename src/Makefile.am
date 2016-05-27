@@ -40,8 +40,17 @@ libplogic_@API_VERSION@_la_VALAFLAGS = \
 	-H plg.h \
 	$(NULL)
 
+plg.h : libplogic-@API_VERSION@.la
+header_DATA=plg.h
+headerdir=$(includedir)/plg-@API_VERSION@/plogic
+
+plg-@API_VERSION@.vapi : libplogic-@API_VERSION@.la
+vapi_DATA=plg-@API_VERSION@.vapi plg-@API_VERSION@.deps
+vapidir=$(VAPIDIR)
+
+
 CLEANFILES=\
-	plg-@API_VERSION@ \
+	plg-@API_VERSION@.vapi \
 	plg.h \
 	$(NULL)
 

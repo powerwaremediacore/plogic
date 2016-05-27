@@ -5,7 +5,11 @@
 using Gee;
 
 public class Plg.GAnd : Plg.GBaseOperatorGate {
-  public override void evaluate (GLib.Cancellable? cancellable) {
+  construct {
+      name = "AND1";
+  }
+  public override void evaluate (GLib.Cancellable? cancellable = null) {
+    GLib.message ("Evaluating AND: name: "+name);
     _evaluated = true;
     if (!enable) return;
     bool s = true;
@@ -17,7 +21,9 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
         if (c == null) continue;
         if (!evaluate_input (input, cancellable)) continue;
       }
+      GLib.message ("Input:"+input.name+" : Value= "+input.state.to_string ());
       s = s && input.state;
+      GLib.message ("Status: "+s.to_string ());
       if (!s) break;
     }
     _output.state = s;

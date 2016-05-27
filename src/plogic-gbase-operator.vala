@@ -8,7 +8,7 @@ public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
   protected Plg.Block _parent;
 
   public string name { get; set; default = "or";  }
-  public bool enable { get; set; }
+  public bool enable { get; set; default = true; }
   public Input.Map get_inputs () { return _inputs; }
   public bool get_evaluated () { return _evaluated; }
   public void reset () { _evaluated = false; }

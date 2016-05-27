@@ -29,7 +29,7 @@ namespace PlogicTest
 		static int main (string[] args)
 		{
 			Test.init (ref args);
-			Case.add_funcs ();
+			CaseAnd.add_funcs ();
 			return Test.run ();
 		}
 	}
