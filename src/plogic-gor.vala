@@ -5,7 +5,10 @@
 using Gee;
 
 public class Plg.GOr : Plg.GBaseOperatorGate {
-  public override void evaluate (GLib.Cancellable? cancellable) {
+  construct {
+      name = "OR1";
+  }
+  public override void evaluate (GLib.Cancellable? cancellable = null) {
     _evaluated = false;
     if (!enable) return;
     _output.state = false;

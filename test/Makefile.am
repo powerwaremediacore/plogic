@@ -18,6 +18,7 @@ plogic_test_SOURCES = \
 	test-config.vala \
 	test.vala \
 	case-and.vala \
+	case-or.vala \
 	$(NULL)
 
 plogic_test_VALAFLAGS = \

@@ -18,5 +18,5 @@ public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
   public Plg.Block? get_parent () {
     return _parent;
   }
-  public abstract void evaluate (GLib.Cancellable? cancellable);
+  public abstract void evaluate (GLib.Cancellable? cancellable = null);
 }
