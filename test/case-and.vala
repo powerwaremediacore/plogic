@@ -11,6 +11,8 @@ public class PlogicTest.CaseAnd
 		Test.add_func ("/plogic/case/and",
 		() => {
 			var op = new Plg.GAnd ();
+			assert (op.enable);
+			assert (op.name == "AND1");
 			var i1 = new Plg.GInput ();
 			i1.name = "Input1";
 			var i2 = new Plg.GInput ();
