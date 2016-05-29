@@ -103,5 +103,47 @@ public class PlogicTest.CaseBlock
 			assert (op.get_output ().state == false);
 			assert (b.get_outputs ().get ("Output1").state == false);
 		});
+		Test.add_func ("/plogic/case/block-and/no-evaluation",
+		() => {
+			var b = new Plg.GBlock ();
+			assert (b.name == "Block1");
+			var op = new Plg.GAnd ();
+			assert (op.enable);
+			assert (op.name == "AND1");
+			assert (b.get_operators ().size == 0);
+			b.add_operator (op);
+			assert (b.get_operators ().size == 1);
+			var i1 = new Plg.GInput ();
+			i1.name = "Input1";
+			var i2 = new Plg.GInput ();
+			i1.name = "Input2";
+			op.get_inputs ().set (i1.name, i1);
+			op.get_inputs ().set (i2.name, i2);
+			assert (op.get_inputs ().size == 2);
+			op.evaluate ();
+			assert (!op.get_evaluated ());
+			assert (i1.state);
+			assert (i1.enable);
+			assert (i2.state);
+			assert (i2.enable);
+			assert (op.get_parent () != null);
+			assert (op.get_parent ().name == "Block1");
+			assert (op.get_output ().state == true);
+			i1.state = false;
+			assert (i1.state == false);
+			op.evaluate ();
+			assert (!op.get_evaluated ());
+			assert (op.get_output ().state == true);
+			i1.state = true;
+			i2.state = false;
+			op.evaluate ();
+			assert (!op.get_evaluated ());
+			assert (op.get_output ().state == true);
+			i1.state = false;
+			i2.state = false;
+			op.evaluate ();
+			assert (!op.get_evaluated ());
+			assert (op.get_output ().state == true);
+		});
 	}
 }

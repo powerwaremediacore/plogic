@@ -19,16 +19,13 @@ public class Plg.GOr : Plg.GBaseOperatorGate {
       if (parent != null) {
         var c = input.connection;
         if (c == null) continue;
-        GLib.message ("Operator:"+name+" Evaluated");
         if (!evaluate_input (input, cancellable)) continue;
-        GLib.message ("Operator:"+name+" Input:"+input.name+" Evaluated...");
       }
       _evaluated = true;
       res = res || input.state;
     }
     if (_evaluated == true) {
       _output.state = res;
-      GLib.message ("Operator:"+name+" Output="+_output.state.to_string ());
       // If in block update output connections
       evaluate_output (_output);
       return;

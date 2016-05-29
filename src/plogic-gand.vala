@@ -9,7 +9,7 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
       name = "AND1";
   }
   public override void evaluate (GLib.Cancellable? cancellable = null) {
-    _evaluated = true;
+    _evaluated = false;
     if (!enable) return;
     bool s = true;
     foreach (Input input in get_inputs ().values) {
@@ -20,9 +20,13 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
         if (c == null) continue;
         if (!evaluate_input (input, cancellable)) continue;
       }
+      _evaluated = true;
       s = s && input.state;
       if (!s) break;
     }
-    _output.state = s;
+    if (_evaluated) {
+      _output.state = s;
+      evaluate_output (_output);
+    }
   }
 }

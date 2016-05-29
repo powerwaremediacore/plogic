@@ -1,6 +1,8 @@
 include $(top_srcdir)/gtester.mk
 
-noinst_PROGRAMS = plogic_test
+TEST_PROGS+= plogic_test
+
+noinst_PROGRAMS = $(TEST_PROGS)
 
 plogic_test_CFLAGS = \
 	$(PLOGIC_CFLAGS) \
@@ -31,6 +33,7 @@ plogic_test_VALAFLAGS = \
 	--pkg gxml-0.10 \
 	--pkg libxml-2.0 \
 	--pkg plg-@API_VERSION@ \
+	-C \
 	$(NULL)
 
 CLEANFILES = \
@@ -41,4 +44,3 @@ EXTRA_DIST += \
 	tests-config.vala.in \
 	$(NULL)
 
-clean:
