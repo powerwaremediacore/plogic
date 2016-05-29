@@ -6,11 +6,10 @@
 using Gee;
 
 public class Plg.GBlock : GBaseOperator, Plg.Block {
-  protected Output.Map _outputs = new Output.Map ();
   protected Plg.Variable.Map _variables = new Plg.Variable.Map ();
   protected Operator.Map _operators = new Operator.Map ();
 
-  public Output.Map get_outputs () { return _outputs; }
+  public Output.Map outputs { get; set; default = new Output.Map (); }
   public Plg.Operator.Map get_operators () { return _operators; }
   public Plg.Variable.Map get_variables () { return _variables; }
 

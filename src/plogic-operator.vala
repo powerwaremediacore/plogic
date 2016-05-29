@@ -29,7 +29,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
       if (!pop.get_evaluated ()) pop.evaluate (cancellable);
       Output popi = null;
       if (pop is Block)
-        popi = (pop as Block).get_outputs ().get (c.value);
+        popi = (pop as Block).outputs.get (c.value);
       if (pop is OperatorGate)
         popi = (pop as OperatorGate).get_output ();
       if (popi == null) return false;
@@ -48,7 +48,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
     foreach (Connection cnn in output.connections) {
       if (cnn.operator == null) {
         if (get_parent () == null) continue;
-        var o = get_parent ().get_outputs ().get (cnn.value);
+        var o = get_parent ().outputs.get (cnn.value);
         if (o == null) continue;
         o.state = output.state;
       }
