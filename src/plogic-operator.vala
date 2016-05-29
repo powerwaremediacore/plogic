@@ -48,11 +48,8 @@ public interface Plg.Operator : Object, Plg.LogicObject {
     foreach (Connection cnn in output.connections) {
       if (cnn.operator == null) {
         if (get_parent () == null) continue;
-        if (cnn.value != null)
-          GLib.message ("Searching for Value: "+cnn.value);
         var o = get_parent ().get_outputs ().get (cnn.value);
         if (o == null) continue;
-        GLib.message ("Updated output:"+o.name);
         o.state = output.state;
       }
     }

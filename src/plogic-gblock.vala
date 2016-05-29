@@ -37,9 +37,7 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       }
     }
     foreach (Operator op in get_operators ().values) {
-      GLib.message ("Evaluating Operator: "+op.name);
       op.evaluate ();
-      GLib.message ("Result: "+op.get_evaluated ().to_string ());
       if (!op.get_evaluated ()) _evaluated = false;
     }
   }
