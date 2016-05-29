@@ -4,7 +4,7 @@
  */
 
 public interface Plg.Variable : Object, LogicObject, Plg.Value {
-  public abstract Plg.Connection.Set connections { get; set; }
+  public abstract Plg.Connection connection { get; set; }
   public class Map : Gee.HashMap<string,Variable> {
     public new Variable get (string name) { return base.get (name); }
   }

@@ -32,7 +32,7 @@ public class Plg.GOutput : Plg.GValue, Output {
 }
 
 public class Plg.GVariable : Plg.GValue, Variable {
-  public Plg.Connection.Set connections { get; set; default = new Plg.Connection.Set (); }
+  public Plg.Connection connection { get; set; }
   construct {
     name = "Variable1";
   }
