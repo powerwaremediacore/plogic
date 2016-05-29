@@ -7,10 +7,9 @@ using Gee;
 
 public class Plg.GBlock : GBaseOperator, Plg.Block {
   protected Plg.Variable.Map _variables = new Plg.Variable.Map ();
-  protected Operator.Map _operators = new Operator.Map ();
 
   public Output.Map outputs { get; set; default = new Output.Map (); }
-  public Plg.Operator.Map get_operators () { return _operators; }
+  public Plg.Operator.Map operators { get; set; default = new Operator.Map (); }
   public Plg.Variable.Map get_variables () { return _variables; }
 
   construct {
@@ -35,7 +34,7 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
         if (!evaluate_input (input, cancellable)) continue;
       }
     }
-    foreach (Operator op in get_operators ().values) {
+    foreach (Operator op in operators.values) {
       op.evaluate ();
       if (!op.get_evaluated ()) _evaluated = false;
     }

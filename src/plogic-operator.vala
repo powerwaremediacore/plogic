@@ -24,7 +24,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
       var pin = parent.inputs.get (c.value);
       if (pin != null) input.state = pin.state;
     } else {
-      var pop = parent.get_operators ().get (c.operator);
+      var pop = parent.operators.get (c.operator);
       if (pop == null) return false;
       if (!pop.get_evaluated ()) pop.evaluate (cancellable);
       Output popi = null;
