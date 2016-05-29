@@ -13,6 +13,6 @@ public errordomain Plg.BlockError {
 
 public interface Plg.Block : Object, Plg.LogicObject, Plg.Operator {
   public abstract Plg.Output.Map outputs { get; set; }
-  public abstract Plg.Variable.Map get_variables ();
+  public abstract Plg.Variable.Map variables { get; set; }
   public abstract Plg.Operator.Map operators { get; set; }
 }
