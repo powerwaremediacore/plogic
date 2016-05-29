@@ -49,8 +49,15 @@ public interface Plg.Operator : Object, Plg.LogicObject {
       if (cnn.operator == null) {
         if (get_parent () == null) continue;
         var o = get_parent ().outputs.get (cnn.value);
-        if (o == null) continue;
-        o.state = output.state;
+        if (o != null) {
+          o.state = output.state;
+          continue;
+        }
+        GLib.message ("Searching Variable: "+cnn.value);
+        var v = get_parent ().variables.get (cnn.value);
+        if (v == null) continue;
+        GLib.message ("Updating Variable: "+v.name);
+        v.state = output.state;
       }
     }
     return true;
