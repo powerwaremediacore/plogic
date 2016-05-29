@@ -14,6 +14,19 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
   public Plg.Operator.Map get_operators () { return _operators; }
   public Plg.Variable.Map get_variables () { return _variables; }
 
+  construct {
+      name = "Block1";
+  }
+
+  public void add_operator (Plg.Operator op) {
+      _operators.set (op.name, op);
+      op.set_parent (this);
+  }
+
+  public void add_variable (Plg.Variable v) {
+      _variables.set (v.name, v);
+  }
+
   public override void evaluate (GLib.Cancellable? cancellable = null) {
     _evaluated = true;
     if (!enable) { _evaluated = false; return; }
@@ -24,7 +37,10 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       }
     }
     foreach (Operator op in get_operators ().values) {
-      op.evaluate (null);
+      GLib.message ("Evaluating Operator: "+op.name);
+      op.evaluate ();
+      GLib.message ("Result: "+op.get_evaluated ().to_string ());
+      if (!op.get_evaluated ()) _evaluated = false;
     }
   }
 }

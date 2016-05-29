@@ -31,6 +31,7 @@ namespace PlogicTest
 			Test.init (ref args);
 			CaseAnd.add_funcs ();
 			CaseOr.add_funcs ();
+			CaseBlock.add_funcs ();
 			return Test.run ();
 		}
 	}

@@ -12,16 +12,26 @@ public class Plg.GOr : Plg.GBaseOperatorGate {
     _evaluated = false;
     if (!enable) return;
     _output.state = false;
+    bool res = false;
     foreach (Input input in get_inputs ().values) {
       if (!input.enable) continue;
       var parent = get_parent ();
       if (parent != null) {
         var c = input.connection;
         if (c == null) continue;
+        GLib.message ("Operator:"+name+" Evaluated");
         if (!evaluate_input (input, cancellable)) continue;
+        GLib.message ("Operator:"+name+" Input:"+input.name+" Evaluated...");
       }
-      _output.state = _output.state || input.state;
+      _evaluated = true;
+      res = res || input.state;
     }
-    _evaluated = true;
+    if (_evaluated == true) {
+      _output.state = res;
+      GLib.message ("Operator:"+name+" Output="+_output.state.to_string ());
+      // If in block update output connections
+      evaluate_output (_output);
+      return;
+    }
   }
 }

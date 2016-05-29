@@ -7,7 +7,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
   public abstract Input.Map get_inputs ();
   public abstract bool get_evaluated ();
   public abstract void reset ();
-  public abstract void evaluate (GLib.Cancellable? cancellable);
+  public abstract void evaluate (GLib.Cancellable? cancellable = null);
   public abstract void set_parent (Plg.Block parent);
   public abstract Plg.Block? get_parent ();
   /**
@@ -37,7 +37,29 @@ public interface Plg.Operator : Object, Plg.LogicObject {
     }
     return true;
   }
+  /**
+   * Change block's outputs state based on its connection.
+   *
+   * Rerturns: TRUE if its value was updated.
+   */
+  public virtual bool evaluate_output (Output output, GLib.Cancellable? cancellable = null) {
+    var parent = get_parent ();
+    if (parent == null) return true; // No output values updated
+    foreach (Connection cnn in output.connections) {
+      if (cnn.operator == null) {
+        if (get_parent () == null) continue;
+        if (cnn.value != null)
+          GLib.message ("Searching for Value: "+cnn.value);
+        var o = get_parent ().get_outputs ().get (cnn.value);
+        if (o == null) continue;
+        GLib.message ("Updated output:"+o.name);
+        o.state = output.state;
+      }
+    }
+    return true;
+  }
   public class Map : Gee.HashMap<string,Operator> {
     public new Operator get (string name) { return base.get (name); }
+    public new void set (string name, Operator op) { base.set (name, op); }
   }
 }
