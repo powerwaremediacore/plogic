@@ -13,7 +13,7 @@ public class Plg.GOr : Plg.GBaseOperatorGate {
     if (!enable) return;
     _output.state = false;
     bool res = false;
-    foreach (Input input in get_inputs ().values) {
+    foreach (Input input in inputs.values) {
       if (!input.enable) continue;
       var parent = get_parent ();
       if (parent != null) {

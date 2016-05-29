@@ -17,9 +17,9 @@ public class PlogicTest.CaseAnd
 			i1.name = "Input1";
 			var i2 = new Plg.GInput ();
 			i1.name = "Input2";
-			op.get_inputs ().set (i1.name, i1);
-			op.get_inputs ().set (i2.name, i2);
-			assert (op.get_inputs ().size == 2);
+			op.inputs.set (i1.name, i1);
+			op.inputs.set (i2.name, i2);
+			assert (op.inputs.size == 2);
 			op.evaluate (null);
 			assert (i1.state);
 			assert (i1.enable);

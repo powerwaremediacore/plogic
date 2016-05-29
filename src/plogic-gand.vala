@@ -12,7 +12,7 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
     _evaluated = false;
     if (!enable) return;
     bool s = true;
-    foreach (Input input in get_inputs ().values) {
+    foreach (Input input in inputs.values) {
       if (!input.enable) continue;
       var parent = get_parent ();
       if (parent != null) {

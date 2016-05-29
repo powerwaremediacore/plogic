@@ -31,7 +31,7 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
     _evaluated = true;
     if (!enable) { _evaluated = false; return; }
     if (get_parent () != null) {
-      foreach (Input input in get_inputs ().values) {
+      foreach (Input input in inputs.values) {
         if (!input.enable) continue;
         if (!evaluate_input (input, cancellable)) continue;
       }

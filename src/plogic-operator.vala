@@ -4,7 +4,7 @@
  */
 
 public interface Plg.Operator : Object, Plg.LogicObject {
-  public abstract Input.Map get_inputs ();
+  public abstract Input.Map inputs { get; set; }
   public abstract bool get_evaluated ();
   public abstract void reset ();
   public abstract void evaluate (GLib.Cancellable? cancellable = null);
@@ -21,7 +21,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
     var c = input.connection;
     if (c == null) return false;
     if (c.operator == null) {
-      var pin = parent.get_inputs ().get (c.value);
+      var pin = parent.inputs.get (c.value);
       if (pin != null) input.state = pin.state;
     } else {
       var pop = parent.get_operators ().get (c.operator);
