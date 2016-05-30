@@ -88,7 +88,7 @@ public class PlogicTest.CaseBlock
 			assert (bo1.name == "Output1");
 			b.outputs.set (bo1.name, bo1);
 			assert (b.connect_output ("Output1","OR1","Output1"));
-			assert (b.outputs.get ("Output1").connection != null);
+			assert (b.outputs.get ("Output1").internal_connection != null);
 			assert (op.output.connections.size == 1);
 			b.evaluate ();
 			assert (op.get_evaluated ());

@@ -20,7 +20,8 @@ public interface Plg.Output : Object, LogicObject, Plg.Value {
    * have just one {@link Plg.Output}, used and updated internally, with no
    * connection to other operator.
    */
-  public abstract Plg.Connection connection { get; set; }
+  [Description (nick="InternalConnection")]
+  public abstract Plg.InternalConnection internal_connection { get; set; }
   public class Map : Gee.HashMap<string,Output> {
     public new Output get (string name) { return base.get (name); }
   }

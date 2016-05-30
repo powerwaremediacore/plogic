@@ -34,10 +34,10 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       if (bop is OperatorGate)
         obop = (bop as OperatorGate).output;
       if (obop == null) return false;
-      var c = new GConnection ();
+      var c = new GInternalConnection ();
       c.operator = operator;
       c.value = value;
-      o.connection = c;
+      o.internal_connection = c;
       o.enable = true;
       var cp = new GConnection ();
       cp.value = name;
@@ -49,14 +49,14 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
     _evaluated = false;
     if (!enable) { _evaluated = false; return; }
     foreach (Output output in outputs.values) {
-        if (output.connection == null) continue;
-        if (output.connection.operator == null) continue;
-        if (output.connection.value == null) continue;
-        var bop = operators.get (output.connection.operator);
+        if (output.internal_connection == null) continue;
+        if (output.internal_connection.operator == null) continue;
+        if (output.internal_connection.value == null) continue;
+        var bop = operators.get (output.internal_connection.operator);
         if (bop == null) continue;
         Plg.Value bopo = null;
         if (bop is Block)
-          bopo = (bop as Block).outputs.get (output.connection.value);
+          bopo = (bop as Block).outputs.get (output.internal_connection.value);
         if (bop is OperatorGate)
           bopo = (bop as OperatorGate).output;
         if (bopo == null) continue;

@@ -25,7 +25,8 @@ public class Plg.GInput : Plg.GValue, Input {
 
 public class Plg.GOutput : Plg.GValue, Output {
   public Plg.Connection.Set connections { get; set; default = new Plg.Connection.Set (); }
-  public Plg.Connection connection { get; set; }
+  [Description (nick="InternalConnection")]
+  public Plg.InternalConnection internal_connection { get; set; }
   construct {
     name = "Output1";
   }

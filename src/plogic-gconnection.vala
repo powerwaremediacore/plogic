@@ -7,3 +7,5 @@ public class Plg.GConnection : Object, Plg.Connection {
   public string operator { get; set; }
   public string value { get; set; }
 }
+
+public class Plg.GInternalConnection : GConnection, Plg.InternalConnection {}

@@ -11,3 +11,5 @@ public interface Plg.Connection : Object {
     public new Connection[] to_array () { return ((Gee.Collection<Connection>) this).to_array (); }
   }
 }
+
+public interface Plg.InternalConnection : Object, Plg.Connection  {}
