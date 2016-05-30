@@ -87,9 +87,9 @@ public class PlogicTest.CaseBlock
 			var bo1 = new Plg.GOutput ();
 			assert (bo1.name == "Output1");
 			b.outputs.set (bo1.name, bo1);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op.output.connections.add (c3);
+			assert (b.connect_output ("Output1","OR1","Output1"));
+			assert (b.outputs.get ("Output1").connection != null);
+			assert (op.output.connections.size == 1);
 			b.evaluate ();
 			assert (op.get_evaluated ());
 			assert (b.outputs.get ("Output1").state == true);
@@ -154,9 +154,7 @@ public class PlogicTest.CaseBlock
 			assert (b.operators.size == 1);
 			b.add_operator (op2);
 			assert (b.operators.size == 2);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op1.output.connections.add (c3);
+			b.connect_output ("Output1","OR1","Output1");
 			var bi3 = new GInput ();
 			bi3.name = "Input3";
 			b.inputs.set (bi3.name, bi3);
@@ -172,9 +170,7 @@ public class PlogicTest.CaseBlock
 			var bo2 = new GOutput ();
 			bo2.name = "Output2";
 			b.outputs.set (bo2.name, bo2);
-			var c6 = new GConnection ();
-			c6.value = "Output2";
-			op2.output.connections.add (c6);
+			b.connect_output ("Output2","OR2","Output1");
 			b.evaluate ();
 			assert (op1.get_evaluated ());
 			assert (b.outputs.get ("Output1").state == true);
@@ -280,9 +276,7 @@ public class PlogicTest.CaseBlock
 			var bo1 = new Plg.GOutput ();
 			assert (bo1.name == "Output1");
 			b.outputs.set (bo1.name, bo1);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op.output.connections.add (c3);
+			b.connect_output ("Output1", "AND1", "Output1");
 			b.evaluate ();
 			assert (op.get_evaluated ());
 			assert (b.outputs.get ("Output1").state == true);
@@ -347,9 +341,7 @@ public class PlogicTest.CaseBlock
 			assert (b.operators.size == 1);
 			b.add_operator (op2);
 			assert (b.operators.size == 2);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op1.output.connections.add (c3);
+			b.connect_output ("Output1", "AND1", "Output1");
 			var bi3 = new GInput ();
 			bi3.name = "Input3";
 			b.inputs.set (bi3.name, bi3);
@@ -365,9 +357,7 @@ public class PlogicTest.CaseBlock
 			var bo2 = new GOutput ();
 			bo2.name = "Output2";
 			b.outputs.set (bo2.name, bo2);
-			var c6 = new GConnection ();
-			c6.value = "Output2";
-			op2.output.connections.add (c6);
+			b.connect_output ("Output2", "AND2", "Output1");
 			b.evaluate ();
 			assert (op1.get_evaluated ());
 			assert (b.inputs.get ("Input1").state);
@@ -461,9 +451,7 @@ public class PlogicTest.CaseBlock
 			assert (b.operators.size == 1);
 			b.add_operator (op2);
 			assert (b.operators.size == 2);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op1.output.connections.add (c3);
+			b.connect_output ("Output1", "AND1", "Output2");
 			var bi3 = new GInput ();
 			bi3.name = "Input3";
 			b.inputs.set (bi3.name, bi3);
@@ -479,9 +467,7 @@ public class PlogicTest.CaseBlock
 			var bo2 = new GOutput ();
 			bo2.name = "Output2";
 			b.outputs.set (bo2.name, bo2);
-			var c6 = new GConnection ();
-			c6.value = "Output2";
-			op2.output.connections.add (c6);
+			b.connect_output ("Output2", "AND2", "Output1");
 			b.evaluate ();
 			assert (op1.get_evaluated ());
 			assert (b.inputs.get ("Input1").state);
@@ -544,9 +530,7 @@ public class PlogicTest.CaseBlock
 			var bo3 = new GOutput ();
 			bo3.name = "Output3";
 			b.outputs.set (bo3.name, bo3);
-			var c9 = new GConnection ();
-			c9.value = "Output3";
-			op3.output.connections.add (c9);
+			b.connect_output ("Output3", "OR3", "Output1");
 			bi1.state = true;
 			bi2.state = true;
 			bi3.state = true;
@@ -614,9 +598,7 @@ public class PlogicTest.CaseBlock
 			assert (b.operators.size == 1);
 			b.add_operator (op2);
 			assert (b.operators.size == 2);
-			var c3 = new GConnection ();
-			c3.value = "Output1";
-			op1.output.connections.add (c3);
+			b.connect_output ("Output1","AND1","Output1");
 			var bi3 = new GInput ();
 			bi3.name = "Input3";
 			b.inputs.set (bi3.name, bi3);
@@ -632,9 +614,7 @@ public class PlogicTest.CaseBlock
 			var bo2 = new GOutput ();
 			bo2.name = "Output2";
 			b.outputs.set (bo2.name, bo2);
-			var c6 = new GConnection ();
-			c6.value = "Output2";
-			op2.output.connections.add (c6);
+			b.connect_output ("Output2", "AND2", "Output1");
 			b.evaluate ();
 			assert (op1.get_evaluated ());
 			assert (b.inputs.get ("Input1").state);
@@ -697,9 +677,7 @@ public class PlogicTest.CaseBlock
 			var bo3 = new GOutput ();
 			bo3.name = "Output3";
 			b.outputs.set (bo3.name, bo3);
-			var c9 = new GConnection ();
-			c9.value = "Output3";
-			op3.output.connections.add (c9);
+			b.connect_output ("Output3", "OR3", "Output1");
 			bi1.state = true;
 			bi2.state = true;
 			bi3.state = true;
@@ -770,16 +748,10 @@ public class PlogicTest.CaseBlock
 			var aoi2c = new GConnection ();
 			aoi2c.value = "Input2";
 			aoi2.connection = aoi2c;
-			var aoo1c = new GConnection ();
-			aoo1c.value = "Output1";
-			assert (ao.output != null);
-			ao.output.connections.add (aoo1c);
+			b1.connect_output ("Output1", "AND1", "Output1");
 			assert (b1.operators.size == 1);
 			bi2.state = false;
-			foreach (Input i in ao.inputs.values) {
-				GLib.message (ao.name+":"+i.name);
-			}
-			GLib.message ("Evaluating with Just AND. Block operators = "+b1.operators.size.to_string ());
+			Test.message ("Evaluating with Just AND. Block operators = "+b1.operators.size.to_string ());
 			b1.evaluate ();
 			assert (b1.inputs.get ("Input2").state == false);
 			assert (b1.operators.get ("AND1").inputs.size == 2);
@@ -809,10 +781,7 @@ public class PlogicTest.CaseBlock
 			assert (b1.operators.get ("AND1") != null);
 			assert ((b1.operators.get ("AND1")as OperatorGate).output != null);
 			oo.inputs.get ("Input1").connection = ooi2c;
-			var ooo1c = new GConnection ();
-			ooo1c.value = "Output2";
-			assert (oo.output != null);
-			oo.output.connections.add (ooo1c);
+			b1.connect_output ("Output2","OR1","Output1");
 			// Checks for Block1
 			bi1.state = false;
 			bi2.state = false;
@@ -860,9 +829,7 @@ public class PlogicTest.CaseBlock
 			var b2ori2c = new GConnection ();
 			b2ori2c.value = "Input2";
 			b2or.inputs.get ("Input2").connection = b2ori2c;
-			var b2oroc = new GConnection ();
-			b2oroc.value = "Output1";
-			b2or.output.connections.add (b2oroc);
+			b2.connect_output ("Output1", "OR2", "Output1");
 			b2i1.state = false;
 			b2i2.state = false;
 			b2.evaluate ();
@@ -903,12 +870,8 @@ public class PlogicTest.CaseBlock
 			var b22c = new GConnection ();
 			b22c.value = "Input2";
 			b2.inputs.get ("Input2").connection = b22c;
-			var b1o2c = new GConnection ();
-			b1o2c.value = "Output1";
-			b1.outputs.get ("Output2").connections.add (b1o2c);
-			var b2o1c = new GConnection ();
-			b2o1c.value = "Output2";
-			b2.outputs.get ("Output1").connections.add (b2o1c);
+			mb.connect_output ("Output1","Block1","Output2");
+			mb.connect_output ("Output2", "Block2", "Output1");
 
 			var mand = new GAnd ();
 			mand.name = "AND2";
@@ -926,9 +889,7 @@ public class PlogicTest.CaseBlock
 			mandi2c.operator = "Block2";
 			mandi2c.value = "Output1";
 			mand.inputs.get ("Input2").connection = mandi2c;
-			var mandoc = new GConnection ();
-			mandoc.value = "Output3";
-			mand.output.connections.add (mandoc);
+			mb.connect_output ("Output3","AND2","Output1");
 			mbi1.state = false;
 			mbi2.state = false;
 			mbi3.state = false;

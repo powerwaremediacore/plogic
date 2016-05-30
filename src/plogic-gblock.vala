@@ -23,18 +23,52 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       _variables.set (v.name, v);
   }
 
+  public bool connect_output (string name, string operator, string value) {
+      var o = outputs.get (name);
+      if (o == null) return false;
+      var bop = operators.get (operator);
+      if (bop == null) return false;
+      Plg.Output obop = null;
+      if (bop is Block)
+        obop = (bop as Block).outputs.get (value);
+      if (bop is OperatorGate)
+        obop = (bop as OperatorGate).output;
+      if (obop == null) return false;
+      var c = new GConnection ();
+      c.operator = operator;
+      c.value = value;
+      o.connection = c;
+      o.enable = true;
+      var cp = new GConnection ();
+      cp.value = name;
+      obop.connections.add (cp);
+      return true;
+  }
+
   public override void evaluate (GLib.Cancellable? cancellable = null) {
-    _evaluated = true;
+    _evaluated = false;
     if (!enable) { _evaluated = false; return; }
+    foreach (Output output in outputs.values) {
+        if (output.connection == null) continue;
+        if (output.connection.operator == null) continue;
+        if (output.connection.value == null) continue;
+        var bop = operators.get (output.connection.operator);
+        if (bop == null) continue;
+        Plg.Value bopo = null;
+        if (bop is Block)
+          bopo = (bop as Block).outputs.get (output.connection.value);
+        if (bop is OperatorGate)
+          bopo = (bop as OperatorGate).output;
+        if (bopo == null) continue;
+        GLib.message ("Block: "+name+" Evaluating Oper: "+bop.name);
+        bop.evaluate (cancellable);
+        _evaluated = bop.get_evaluated ();
+    }
     if (get_parent () != null) {
       foreach (Input input in inputs.values) {
         if (!input.enable) continue;
         if (!evaluate_input (input, cancellable)) continue;
       }
-    }
-    foreach (Operator op in operators.values) {
-      op.evaluate ();
-      if (!op.get_evaluated ()) _evaluated = false;
     }
     foreach (Output output in outputs.values) {
         evaluate_output (output, cancellable);
