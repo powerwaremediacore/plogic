@@ -14,11 +14,13 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
     bool s = true;
     foreach (Input input in inputs.values) {
       if (!input.enable) continue;
+      GLib.message ("Oper: "+name+" Evaluating input: "+input.name);
       var parent = get_parent ();
       if (parent != null) {
         var c = input.connection;
         if (c == null) continue;
         if (!evaluate_input (input, cancellable)) continue;
+        GLib.message ("Oper: "+name+" Evaluated input:"+input.name+" as "+input.state.to_string ());
       }
       _evaluated = true;
       s = s && input.state;
@@ -26,6 +28,7 @@ public class Plg.GAnd : Plg.GBaseOperatorGate {
     }
     if (_evaluated) {
       _output.state = s;
+      GLib.message ("Oper: "+name+" Evaluated to: "+_output.state.to_string ());
       evaluate_output (_output);
     }
   }

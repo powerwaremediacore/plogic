@@ -36,5 +36,8 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       op.evaluate ();
       if (!op.get_evaluated ()) _evaluated = false;
     }
+    foreach (Output output in outputs.values) {
+        evaluate_output (output, cancellable);
+    }
   }
 }

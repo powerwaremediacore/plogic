@@ -6,5 +6,8 @@
 using Gee;
 
 public interface Plg.OperatorGate : Object, Plg.LogicObject, Plg.Operator {
-  public abstract Plg.Output get_output ();
+  /**
+   * Implementators should not set this property, but internally.
+   */
+  public abstract Plg.Output output { get; set; }
 }

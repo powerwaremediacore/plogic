@@ -26,6 +26,7 @@ public class Plg.GOr : Plg.GBaseOperatorGate {
     }
     if (_evaluated == true) {
       _output.state = res;
+      GLib.message ("Oper: "+name+" Evaluated to: "+_output.state.to_string ());
       // If in block update output connections
       evaluate_output (_output);
       return;

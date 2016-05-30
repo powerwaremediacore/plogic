@@ -5,6 +5,7 @@
 
 public interface Plg.Input : Object, Plg.LogicObject, Plg.Value {
   public abstract Plg.Connection? connection { get; set; }
+  // TODO: Add order property
   public class Map : Gee.HashMap<string,Input> {
     public new Input get (string name) { return base.get (name); }
   }

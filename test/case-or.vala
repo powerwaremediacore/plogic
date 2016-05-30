@@ -26,19 +26,19 @@ public class PlogicTest.CaseOr
 			assert (i2.state);
 			assert (i2.enable);
 			assert (op.get_parent () == null);
-			assert (op.get_output ().state == true);
+			assert (op.output.state == true);
 			i1.state = false;
 			assert (i1.state == false);
 			op.evaluate (null);
-			assert (op.get_output ().state == true);
+			assert (op.output.state == true);
 			i1.state = true;
 			i2.state = false;
 			op.evaluate (null);
-			assert (op.get_output ().state == true);
+			assert (op.output.state == true);
 			i1.state = false;
 			i2.state = false;
 			op.evaluate (null);
-			assert (op.get_output ().state == false);
+			assert (op.output.state == false);
 		});
 	}
 }

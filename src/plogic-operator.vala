@@ -16,13 +16,15 @@ public interface Plg.Operator : Object, Plg.LogicObject {
    * Rerturns: TRUE if its value was updated.
    */
   public virtual bool evaluate_input (Input input, GLib.Cancellable? cancellable = null) {
+    GLib.message ("Oper:"+this.name+" Evaluating input: "+input.name);
     var parent = get_parent ();
     if (parent == null) return true; // Keeps actual intput's state
     var c = input.connection;
     if (c == null) return false;
     if (c.operator == null) {
       var pin = parent.inputs.get (c.value);
-      if (pin != null) input.state = pin.state;
+      if (pin == null) return false;
+      input.state = pin.state;
     } else {
       var pop = parent.operators.get (c.operator);
       if (pop == null) return false;
@@ -31,7 +33,7 @@ public interface Plg.Operator : Object, Plg.LogicObject {
       if (pop is Block)
         popi = (pop as Block).outputs.get (c.value);
       if (pop is OperatorGate)
-        popi = (pop as OperatorGate).get_output ();
+        popi = (pop as OperatorGate).output;
       if (popi == null) return false;
       input.state = popi.state;
     }
@@ -48,15 +50,17 @@ public interface Plg.Operator : Object, Plg.LogicObject {
     foreach (Connection cnn in output.connections) {
       if (cnn.operator == null) {
         if (get_parent () == null) continue;
+        GLib.message ("Oper: "+name+" Searching Output: "+cnn.value);
         var o = get_parent ().outputs.get (cnn.value);
         if (o != null) {
+          GLib.message ("Oper: "+name+" Updating Output: "+o.name);
           o.state = output.state;
           continue;
         }
-        GLib.message ("Searching Variable: "+cnn.value);
+        GLib.message ("Oper: "+name+" Searching Variable: "+cnn.value);
         var v = get_parent ().variables.get (cnn.value);
         if (v == null) continue;
-        GLib.message ("Updating Variable: "+v.name);
+        GLib.message ("Oper: "+name+" Updating Variable: "+v.name);
         v.state = output.state;
       }
     }

@@ -4,6 +4,9 @@
  */
 
 public interface Plg.Output : Object, LogicObject, Plg.Value {
+  /**
+   * A set of {@link Plg.Connection} objects updated by this output.
+   */
   public abstract Plg.Connection.Set connections { get; set; }
   public class Map : Gee.HashMap<string,Output> {
     public new Output get (string name) { return base.get (name); }
