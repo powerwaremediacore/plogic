@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+includedir=@includedir@
+
+Name: pcfdi-@PKG_VERSION@
+Description: PWMC CFDI low level CFDI handler
+Version: @VERSION@
+Requires: @PKGS@
+Libs: -L${libdir} -lplogic-@API_VERSION@
+Cflags: -I${includedir}/plogic-@API_VERSION@
+

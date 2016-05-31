@@ -3,7 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Value : Object, LogicObject {
+public interface Plg.Value : Object, GXml.Serializable, LogicObject {
   public abstract bool state { get; set; }
   public abstract void set_operator (Plg.Operator op);
   public abstract Plg.Operator get_operator ();

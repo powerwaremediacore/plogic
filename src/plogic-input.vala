@@ -3,10 +3,10 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Input : Object, Plg.LogicObject, Plg.Value {
+public interface Plg.Input : Object, GXml.Serializable, Plg.LogicObject, Plg.Value {
   public abstract Plg.Connection? connection { get; set; }
   // TODO: Add order property
-  public class Map : Gee.HashMap<string,Input> {
+  public class Map : GXml.SerializableHashMap<string,Input> {
     public new Input get (string name) { return base.get (name); }
   }
 }

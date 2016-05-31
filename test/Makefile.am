@@ -22,6 +22,7 @@ plogic_test_SOURCES = \
 	case-and.vala \
 	case-or.vala \
 	case-block.vala \
+	case-block-xml.vala \
 	$(NULL)
 
 plogic_test_VALAFLAGS = \

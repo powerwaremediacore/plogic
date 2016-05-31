@@ -2,7 +2,7 @@
 /*
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
+public abstract class Plg.GBaseOperator : Plg.GObject, LogicObject, Operator {
   protected bool _evaluated = false;
   protected Plg.Block _parent;
 
@@ -11,11 +11,7 @@ public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
   public Input.Map inputs { get; set; default = new Input.Map (); }
   public bool get_evaluated () { return _evaluated; }
   public virtual void reset () { _evaluated = false; }
-  public void set_parent (Plg.Block parent) {
-    _parent = parent;
-  }
-  public Plg.Block? get_parent () {
-    return _parent;
-  }
+  public void set_parent (Plg.Block parent) { _parent = parent; }
+  public Plg.Block? get_parent () { return _parent; }
   public abstract void evaluate (GLib.Cancellable? cancellable = null);
 }

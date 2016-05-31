@@ -3,7 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Operator : Object, Plg.LogicObject {
+public interface Plg.Operator : Object, GXml.Serializable, Plg.LogicObject {
   public abstract Input.Map inputs { get; set; }
   public abstract bool get_evaluated ();
   public abstract void reset ();

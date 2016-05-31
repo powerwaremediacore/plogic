@@ -4,7 +4,7 @@
  */
 using Gee;
 
-public interface Plg.Connection : Object {
+public interface Plg.Connection : Object, GXml.Serializable {
   public abstract string operator { get; set; }
   public abstract string value { get; set; }
   public class Set : Gee.HashSet<Connection> {

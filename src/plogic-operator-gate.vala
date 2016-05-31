@@ -5,7 +5,7 @@
 
 using Gee;
 
-public interface Plg.OperatorGate : Object, Plg.LogicObject, Plg.Operator {
+public interface Plg.OperatorGate : Object, GXml.Serializable, Plg.LogicObject, Plg.Operator {
   /**
    * Implementators should not set this property, but internally.
    */

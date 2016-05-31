@@ -3,7 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public class Plg.GConnection : Object, Plg.Connection {
+public class Plg.GConnection : Plg.GObject, Plg.Connection {
   public string operator { get; set; }
   public string value { get; set; }
 }

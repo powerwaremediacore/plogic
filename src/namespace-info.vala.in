@@ -19,5 +19,5 @@
  * Authors:
  *      Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
-[CCode (gir_namespace = "Plg", gir_version = "@API_VERSION@", cheader_filename = "plg/plg.h")]
+[CCode (gir_namespace = "Plg", gir_version = "@API_VERSION@", cheader_filename = "plogic/plg.h")]
 namespace Plg {}

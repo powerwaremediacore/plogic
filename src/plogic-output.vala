@@ -3,7 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Output : Object, LogicObject, Plg.Value {
+public interface Plg.Output : Object, GXml.Serializable, LogicObject, Plg.Value {
   /**
    * A set of {@link Plg.Connection} objects updated by this output.
    */
@@ -22,7 +22,7 @@ public interface Plg.Output : Object, LogicObject, Plg.Value {
    */
   [Description (nick="InternalConnection")]
   public abstract Plg.InternalConnection internal_connection { get; set; }
-  public class Map : Gee.HashMap<string,Output> {
+  public class Map : GXml.SerializableHashMap<string,Output> {
     public new Output get (string name) { return base.get (name); }
   }
 }

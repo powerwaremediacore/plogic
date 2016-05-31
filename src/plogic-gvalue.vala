@@ -3,7 +3,7 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public class Plg.GValue : Object, Plg.LogicObject, Plg.Value {
+public class Plg.GValue : Plg.GObject, Plg.LogicObject, Plg.Value {
   protected Plg.Operator _operator = null;
 
   public string name { get; set; default = "Value1"; }

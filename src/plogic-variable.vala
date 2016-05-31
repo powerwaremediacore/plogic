@@ -3,9 +3,9 @@
  * Copyright (C) 2016  Daniel Espinosa <daniel.espinosa@pwmc.mx>
  */
 
-public interface Plg.Variable : Object, LogicObject, Plg.Value {
+public interface Plg.Variable : Object, GXml.Serializable, LogicObject, Plg.Value {
   public abstract Plg.Connection connection { get; set; }
-  public class Map : Gee.HashMap<string,Variable> {
+  public class Map : GXml.SerializableHashMap<string,Variable> {
     public new Variable get (string name) { return base.get (name); }
   }
 }
