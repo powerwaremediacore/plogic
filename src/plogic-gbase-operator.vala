@@ -10,7 +10,7 @@ public abstract class Plg.GBaseOperator : Object, LogicObject, Operator {
   public bool enable { get; set; default = true; }
   public Input.Map inputs { get; set; default = new Input.Map (); }
   public bool get_evaluated () { return _evaluated; }
-  public void reset () { _evaluated = false; }
+  public virtual void reset () { _evaluated = false; }
   public void set_parent (Plg.Block parent) {
     _parent = parent;
   }

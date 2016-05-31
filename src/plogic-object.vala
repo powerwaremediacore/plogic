@@ -6,4 +6,5 @@
 public interface Plg.LogicObject : Object {
   public abstract string name { get; set; }
   public abstract bool enable { get; set; }
+  public abstract void reset ();
 }

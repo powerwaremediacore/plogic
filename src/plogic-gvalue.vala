@@ -13,6 +13,9 @@ public class Plg.GValue : Object, Plg.LogicObject, Plg.Value {
   public GValue.with_operator (Plg.Operator op) { _operator = op; }
   public void set_operator (Plg.Operator op) { _operator = op; }
   public Plg.Operator get_operator () { return _operator; }
+  public void reset () {
+    state = true;
+  }
 }
 
 public class Plg.GInput : Plg.GValue, Input {

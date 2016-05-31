@@ -20,6 +20,7 @@ public class Plg.GOr : Plg.GBaseOperatorGate {
         var c = input.connection;
         if (c == null) continue;
         if (!evaluate_input (input, cancellable)) continue;
+        GLib.message ("Oper: "+name+" Evaluated input: "+input.name+" to: "+input.state.to_string ());
       }
       _evaluated = true;
       res = res || input.state;

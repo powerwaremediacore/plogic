@@ -14,6 +14,18 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
       name = "Block1";
   }
 
+
+  public override void reset () {
+    GLib.message ("Reseting Block: "+name);
+    _evaluated = false;
+    foreach (Operator op in operators.values) {
+      GLib.message ("Reseting inner Block: "+op.name);
+      if (op is Block)
+        (op as Block).reset ();
+      else
+        op.reset ();
+    }
+  }
   public void add_operator (Plg.Operator op) {
       _operators.set (op.name, op);
       op.set_parent (this);
@@ -22,25 +34,41 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
   public void add_variable (Plg.Variable v) {
       _variables.set (v.name, v);
   }
-
-  public bool connect_output (string name, string operator, string value) {
-      var o = outputs.get (name);
+  public bool connect_input_internal (string input, string operator, string value) {
+    var i = inputs.get (input);
+    if (i == null) return false;
+    var op = operators.get (operator);
+    if (op == null) return false;
+    var opi = op.inputs.get (value);
+    if (opi == null) return false;
+    var c = new GConnection ();
+    c.value = input;
+    opi.connection = c;
+    return true;
+  }
+  /**
+   * Connects block's output to internal operator's output.
+   */
+  public bool connect_output_internal (string output, string operator, string oper_output) {
+      var o = outputs.get (output);
       if (o == null) return false;
       var bop = operators.get (operator);
       if (bop == null) return false;
       Plg.Output obop = null;
       if (bop is Block)
-        obop = (bop as Block).outputs.get (value);
-      if (bop is OperatorGate)
+        obop = (bop as Block).outputs.get (oper_output);
+      if (bop is OperatorGate) {
+        if ((bop as OperatorGate).output.name != oper_output) return false;
         obop = (bop as OperatorGate).output;
+      }
       if (obop == null) return false;
       var c = new GInternalConnection ();
       c.operator = operator;
-      c.value = value;
+      c.value = oper_output;
       o.internal_connection = c;
       o.enable = true;
       var cp = new GConnection ();
-      cp.value = name;
+      cp.value = output;
       obop.connections.add (cp);
       return true;
   }
@@ -49,6 +77,7 @@ public class Plg.GBlock : GBaseOperator, Plg.Block {
     _evaluated = false;
     if (!enable) { _evaluated = false; return; }
     foreach (Output output in outputs.values) {
+        GLib.message ("Block:"+name+" Evaluating output: "+output.name);
         if (output.internal_connection == null) continue;
         if (output.internal_connection.operator == null) continue;
         if (output.internal_connection.value == null) continue;

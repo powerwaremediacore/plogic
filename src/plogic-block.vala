@@ -16,5 +16,6 @@ public interface Plg.Block : Object, Plg.LogicObject, Plg.Operator {
   public abstract Plg.Variable.Map variables { get; set; }
   public abstract Plg.Operator.Map operators { get; set; }
 
-  public abstract bool connect_output (string name, string operator, string value);
+  public abstract bool connect_output_internal (string name, string operator, string value);
+  public abstract bool connect_input_internal (string name, string operator, string value);
 }
